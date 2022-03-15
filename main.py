@@ -24,13 +24,15 @@ class Storage():
         )
         cur = self.db.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS scores(score INT)")
-        def populate(self):
-            cur = self.db.cursor()
-            cur.execute("INSERT INTO scores(score) VALUES(1234)")
-        def score(self):
-            cur = self.db.cursor()
-            cur.execute("SELECT * FROM scores")
-            row = cur.fetchone()
+
+    def populate(self):
+        cur = self.db.cursor()
+        cur.execute("INSERT INTO scores(score) VALUES(1234)")
+
+    def score(self):
+        cur = self.db.cursor()
+        cur.execute("SELECT * FROM scores")
+        row = cur.fetchone()
         return row[0]
 
 if __name__ == "__main__":

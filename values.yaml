@@ -1,0 +1,134 @@
+# Default values for api-helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+repo:
+  name: "example"
+
+profileName: ""
+
+domain: "example.dev.local"
+
+image:
+  repository: eminturan/example
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+# fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+ingress:
+  enabled: false
+  tls:
+    enabled: false
+  annotations:
+  path: (/|$)(.*)
+
+
+resources:
+  {}
+  #requests:
+  #  cpu: "10m"
+  #  memory: "10Mi"
+  #limits:
+  #  cpu: "300m"
+  #  memory: "512Mi"
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Additional environment variables for services
+extraEnv: |
+  - name: MYSQL_USERNAME
+    value: "test_user"
+  - name: MYSQL_PASSWORD
+    value: "test123"
+  - name: MYSQL_INSTANCE_NAME
+    value: "test_db"
+  - name: MYSQL_PORT_3306_TCP_ADDR
+    value: "mysql"
+  - name: MYSQL_PORT_3306_TCP_PORT
+    value: "3306"
+
+appConfig:
+  enabled: false
+
+logConfig:
+  enabled: false
+
+healthCheck:
+  enabled: false
+  livenessProbe:
+    httpGet:
+      path: /path
+      port: 8080
+      scheme: HTTP
+    initialDelaySeconds: 210
+    timeoutSeconds: 10
+    periodSeconds: 3
+    successThreshold: 1
+    failureThreshold: 5
+  readinessProbe:
+    httpGet:
+      path: /path
+      port: 8080
+      scheme: HTTP
+    initialDelaySeconds: 210
+    timeoutSeconds: 10
+    periodSeconds: 3
+    successThreshold: 1
+    failureThreshold: 5
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 4
+  # targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
